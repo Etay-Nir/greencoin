@@ -1,82 +1,67 @@
+import PortfolioTracker from '@/components/PortfolioTracker';
+
 export default function PortfolioPage() {
   return (
-    <div className="container py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Portfolio</h1>
-        <button className="btn btn-primary">Add Holding</button>
-      </div>
+    <>
+      {/* Header */}
+      <section className="py-12 bg-background-card border-b border-border">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-3xl font-bold text-text-primary mb-4">
+              Cryptocurrency Portfolio Tracker
+            </h1>
+            <p className="text-text-secondary text-lg">
+              Track your cryptocurrency investments, monitor performance, and analyze your portfolio allocation
+              in real-time.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      {/* Portfolio Summary */}
-      <div className="grid md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-600 text-sm mb-2">Total Value</h3>
-          <p className="text-2xl font-bold">$25,000</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-600 text-sm mb-2">24h Change</h3>
-          <p className="text-2xl font-bold text-green-500">+$1,250</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-600 text-sm mb-2">Total Profit/Loss</h3>
-          <p className="text-2xl font-bold text-green-500">+$5,000</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-gray-600 text-sm mb-2">Number of Holdings</h3>
-          <p className="text-2xl font-bold">5</p>
-        </div>
-      </div>
+      {/* Portfolio Tracker */}
+      <PortfolioTracker />
 
-      {/* Holdings Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Asset
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Amount
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Value
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                24h Change
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {/* Example holding - will be replaced with dynamic data */}
-            <tr>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gray-200 rounded-full mr-3"></div>
-                  <div>
-                    <div className="text-sm font-medium text-gray-900">Bitcoin</div>
-                    <div className="text-sm text-gray-500">BTC</div>
-                  </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">0.5</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">$22,500</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className="text-sm text-green-500">+2.5%</span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <button className="text-primary hover:text-primary/80 mr-3">Edit</button>
-                <button className="text-red-500 hover:text-red-600">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
+      {/* Features Section */}
+      <section className="py-12 bg-background-card border-t border-border">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="card p-6">
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-text-primary mb-2">Manual Entry</h3>
+              <p className="text-text-secondary">
+                Easily add your cryptocurrency holdings with purchase prices and quantities for accurate tracking.
+              </p>
+            </div>
+            <div className="card p-6">
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-text-primary mb-2">Real-Time Updates</h3>
+              <p className="text-text-secondary">
+                Monitor your portfolio value with real-time price updates from reliable data sources.
+              </p>
+            </div>
+            <div className="card p-6">
+              <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-text-primary mb-2">Portfolio Analysis</h3>
+              <p className="text-text-secondary">
+                Visualize your portfolio allocation and track performance metrics with intuitive charts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 } 
