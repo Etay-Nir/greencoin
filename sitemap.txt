@@ -1,0 +1,53 @@
+GreenCoin (Homepage) - [www.greencoin.com]
+├── Cryptocurrency Data & Tracking
+│   ├── All Cryptocurrencies (List View) - [/cryptocurrencies]
+│   │   ├── Individual Cryptocurrency Page (Dynamic) - [/cryptocurrencies/{cryptocurrency_symbol}]
+│   │   │   ├── Overview (Price, Charts, Market Cap, etc.)
+│   │   │   ├── Technology
+│   │   │   ├── Team/Developers
+│   │   │   ├── Whitepaper (Link)
+│   │   │   ├── News & Updates (Filtered for this crypto)
+│   │   │   ├── Community (Future - Link to Forum/Comments)
+│   │   └── ... (Other cryptocurrencies)
+│   └── Watchlist (User-Specific) - [/watchlist]
+├── Portfolio Tracker - [/portfolio]
+│   ├── Portfolio Overview (Dashboard)
+│   ├── Add Holding (Form)
+│   └── Edit Holdings (List/Table)
+├── News & Analysis - [/news]
+│   ├── All News (Aggregated Feed)
+│   ├── Filter by Cryptocurrency
+│   ├── Filter by Topic (Regulation, Technology, Market, etc.)
+│   ├── Filter by Source
+│   └── Sentiment Analysis (Visual Indicators)
+├── Learn (Educational Resources) - [/learn]
+│   ├── Beginner - [/learn/beginner]
+│   │   ├── What is Cryptocurrency?
+│   │   ├── What is Blockchain?
+│   │   ├── How to Buy Your First Cryptocurrency
+│   │   ├── Security Best Practices
+│   │   └── Glossary of Terms
+│   ├── Intermediate - [/learn/intermediate]
+│   │   ├── Types of Cryptocurrencies
+│   │   ├── Market Cycles
+│   │   ├── Introduction to Technical Analysis
+│   │   └── Risk Management
+│   ├── Advanced - [/learn/advanced]
+│   │   ├── DeFi Deep Dive
+│   │   ├── NFTs Explained
+│   │   ├── Layer-2 Solutions
+│   │   └── On-Chain Analysis
+│    └── Resources Library (Searchable) - [/learn/resources]
+├── User Account (Conditional - Requires Login)
+│   ├── Login - [/login]
+│   ├── Register - [/register]
+│   ├── Profile - [/profile]
+│   │   ├── Edit Profile
+│   │   ├── Settings (Currency, Language, Notifications)
+│   │   └── Watchlist (Link to /watchlist)
+│   └── Logout - [/logout]
+├── About Us - [/about]
+├── Contact Us - [/contact]
+├── Terms of Service - [/terms]
+├── Privacy Policy - [/privacy]
+└── (Future) Community Forum - [/community] (Could be a separate subdomain: community.greencoin.com)
