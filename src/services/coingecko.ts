@@ -58,14 +58,18 @@ function setCachedData(key: string, data: CoinGeckoNewsArticle[]): void {
 
 export async function fetchNews(
   category?: string,
-  cryptocurrency?: string
+  cryptocurrency?: string,
+  forceRefresh: boolean = false
 ): Promise<CoinGeckoNewsArticle[]> {
   const cacheKey = getCacheKey(category, cryptocurrency);
-  const cachedData = getCachedData(cacheKey);
-
-  if (cachedData) {
-    console.log('Using cached news data');
-    return cachedData;
+  
+  // Only check cache if not forcing refresh
+  if (!forceRefresh) {
+    const cachedData = getCachedData(cacheKey);
+    if (cachedData) {
+      console.log('Using cached news data');
+      return cachedData;
+    }
   }
 
   try {
