@@ -140,4 +140,105 @@ function analyzeSentiment(text: string): 'positive' | 'negative' | 'neutral' {
   if (positiveCount > negativeCount) return 'positive';
   if (negativeCount > positiveCount) return 'negative';
   return 'neutral';
+}
+
+const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3';
+
+export interface CryptoCurrency {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  market_cap: number;
+  market_cap_rank: number;
+  total_volume: number;
+  price_change_percentage_24h: number;
+  circulating_supply: number;
+}
+
+export async function fetchCryptocurrencies(
+  page: number = 1,
+  perPage: number = 50,
+  sortBy: string = 'market_cap_desc'
+): Promise<CryptoCurrency[]> {
+  try {
+    const response = await fetch(
+      `${COINGECKO_API_URL}/coins/markets?vs_currency=usd&order=${sortBy}&per_page=${perPage}&page=${page}&sparkline=false`
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch cryptocurrencies');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching cryptocurrencies:', error);
+    return [];
+  }
+}
+
+export async function searchCryptocurrencies(query: string): Promise<CryptoCurrency[]> {
+  try {
+    const response = await fetch(
+      `${COINGECKO_API_URL}/search?query=${encodeURIComponent(query)}`
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to search cryptocurrencies');
+    }
+
+    const data = await response.json();
+    return data.coins;
+  } catch (error) {
+    console.error('Error searching cryptocurrencies:', error);
+    return [];
+  }
+}
+
+// Format large numbers with appropriate suffixes (K, M, B, T)
+export function formatNumber(num: number): string {
+  if (num >= 1e12) {
+    return (num / 1e12).toFixed(2) + 'T';
+  }
+  if (num >= 1e9) {
+    return (num / 1e9).toFixed(2) + 'B';
+  }
+  if (num >= 1e6) {
+    return (num / 1e6).toFixed(2) + 'M';
+  }
+  if (num >= 1e3) {
+    return (num / 1e3).toFixed(2) + 'K';
+  }
+  return num.toFixed(2);
+}
+
+// Format price changes with appropriate color and sign
+export function formatPriceChange(change: number): { text: string; color: string } {
+  const formattedChange = change.toFixed(2);
+  return {
+    text: `${change >= 0 ? '+' : ''}${formattedChange}%`,
+    color: change >= 0 ? 'text-green-500' : 'text-red-500'
+  };
+}
+
+// Cache cryptocurrency data to avoid excessive API calls
+const cache = new Map<string, { data: any; timestamp: number }>();
+
+export async function getCachedCryptocurrencies(
+  page: number = 1,
+  perPage: number = 50,
+  sortBy: string = 'market_cap_desc'
+): Promise<CryptoCurrency[]> {
+  const cacheKey = `crypto_${page}_${perPage}_${sortBy}`;
+  const cached = cache.get(cacheKey);
+
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data;
+  }
+
+  const data = await fetchCryptocurrencies(page, perPage, sortBy);
+  cache.set(cacheKey, { data, timestamp: Date.now() });
+  return data;
 } 
