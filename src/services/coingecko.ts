@@ -1,6 +1,10 @@
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
-const CACHE_KEY_PREFIX = 'coingecko_news_';
+const CACHE_KEY_PREFIX = 'crypto_news_';
+
+// Using CryptoCompare News API as it provides free news data
+const CRYPTOCOMPARE_API_KEY = ''; // You'll need to add your API key here
+const CRYPTOCOMPARE_API_BASE = 'https://min-api.cryptocompare.com/data/v2';
 
 export interface CoinGeckoNewsArticle {
   id: string;
@@ -74,13 +78,15 @@ export async function fetchNews(
 
   try {
     console.log('Fetching fresh news data from API');
+    
+    // Using CryptoCompare's news endpoint
     const response = await fetch(
-      `${COINGECKO_API_BASE}/news?${new URLSearchParams({
-        ...(category && { category }),
-        ...(cryptocurrency && { coin: cryptocurrency }),
-        per_page: '50',
-        page: '1'
-      })}`
+      `${CRYPTOCOMPARE_API_BASE}/news/?lang=EN${cryptocurrency ? `&categories=${cryptocurrency}` : ''}`,
+      {
+        headers: CRYPTOCOMPARE_API_KEY ? {
+          'authorization': `Apikey ${CRYPTOCOMPARE_API_KEY}`
+        } : undefined
+      }
     );
 
     if (!response.ok) {
@@ -89,19 +95,22 @@ export async function fetchNews(
 
     const data = await response.json();
     
-    // Transform CoinGecko news format to our format
-    const transformedData = data.map((article: any) => ({
-      id: article.id,
+    if (!data.Data) {
+      throw new Error('Invalid response format');
+    }
+
+    // Transform CryptoCompare news format to our format
+    const transformedData: CoinGeckoNewsArticle[] = data.Data.map((article: any) => ({
+      id: article.id.toString(),
       title: article.title,
-      description: article.description,
+      description: article.body,
       url: article.url,
       source: article.source,
-      publishedAt: article.published_at,
-      // Simple sentiment analysis based on title and description
-      sentiment: analyzeSentiment(article.title + ' ' + article.description),
-      category: article.categories[0] || 'general',
-      cryptocurrency: article.coins[0]?.id || 'general',
-      imageUrl: article.thumb_2x
+      publishedAt: new Date(article.published_on * 1000).toISOString(),
+      sentiment: analyzeSentiment(article.title + ' ' + article.body),
+      category: article.categories || 'general',
+      cryptocurrency: cryptocurrency || 'general',
+      imageUrl: article.imageurl
     }));
 
     // Cache the transformed data
@@ -109,7 +118,7 @@ export async function fetchNews(
 
     return transformedData;
   } catch (error) {
-    console.error('Error fetching news from CoinGecko:', error);
+    console.error('Error fetching news:', error);
     throw error;
   }
 }
